@@ -1,0 +1,82 @@
+{
+  "name": "aceproject",
+  "version": "0.1.0",
+  "description": "TS/JS wrapper for the AceProject API",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "keywords": [
+    "aceproject",
+    "wrapper",
+    "ace",
+    "project",
+    "api",
+    "typescript"
+  ],
+  "scripts": {
+    "compile": "tsc -p tsconfig.json",
+    "test": "jest --testMatch '<rootDir>/tests/*.test.+(ts|tsx)'",
+    "test:ci": "npm run test-- --coverage --ci",
+    "lint": "eslint --format=codeframe 'src/**/*.ts'"
+  },
+  "prepublish": "npm run compile",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm test"
+    }
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "**/src/**/*.{js,jsx,ts,tsx}"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json",
+      "ts",
+      "tsx"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.json"
+      }
+    },
+    "testPathIgnorePatterns": [
+      "/lib/",
+      "/node_modules/"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caian-org/aceproject-ts.git"
+  },
+  "author": "Caian R. Ertl <hi@caian.org>",
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/caian-org/aceproject-ts/issues"
+  },
+  "homepage": "https://github.com/caian-org/aceproject-ts#readme",
+  "devDependencies": {
+    "@types/jest": "^24.0.18",
+    "@types/moment-timezone": "^0.5.12",
+    "@types/node": "^12.7.5",
+    "@typescript-eslint/eslint-plugin": "^2.3.0",
+    "@typescript-eslint/parser": "^2.3.0",
+    "eslint": "^6.4.0",
+    "husky": "^3.0.5",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.3"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.26"
+  }
+}
