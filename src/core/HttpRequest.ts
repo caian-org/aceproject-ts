@@ -1,15 +1,6 @@
 import axios from 'axios';
+import { AxiosRequestConfig, Method } from 'axios';
 
-
-export interface IHttpRequestPayload
-{
-    url: string;
-    baseURL?: string;
-    method: string;
-    headers: object;
-    data?: object;
-    params?: object;
-}
 
 export interface IHttpResponse
 {
@@ -33,13 +24,12 @@ export class HttpRequest
         this.headers = {};
     }
 
-    private async perform(payload: IHttpRequestPayload): Promise<IHttpResponse>
+    private async perform(payload: AxiosRequestConfig): Promise<IHttpResponse>
     {
         let error = false;
         let content: object;
 
         try {
-            // @ts-ignore
             content = await axios(payload);
         }
         catch (e) {
@@ -51,9 +41,9 @@ export class HttpRequest
         return ret;
     }
 
-    protected async request(url: string, data: object, method = 'get'): Promise<IHttpResponse>
+    protected async request(url: string, data: object, method: Method = 'get'): Promise<IHttpResponse>
     {
-        const payload: IHttpRequestPayload = { url, method, headers: this.headers };
+        const payload: AxiosRequestConfig = { url, method, headers: this.headers };
 
         if (data) {
             if (method === 'get') {
