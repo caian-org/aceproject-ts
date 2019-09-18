@@ -1,3 +1,5 @@
+import { Method } from 'axios';
+
 import { IWeek, WeekDay } from './Week';
 import { IHttpResponse, HttpRequest } from './HttpRequest';
 
@@ -40,9 +42,9 @@ export class AceProject extends HttpRequest
 {
     private url: string;
     private guid: string;
-    private connection: IAceProjectCredentials;
+    private connection?: IAceProjectCredentials;
 
-    public constructor(c: IAceProjectCredentials)
+    public constructor(c?: IAceProjectCredentials)
     {
         super();
 
@@ -76,7 +78,7 @@ export class AceProject extends HttpRequest
             req.params.guid = this.guid;
         }
 
-        const res: IHttpResponse = await this.request(this.url, req.params, method);
+        const res: IHttpResponse = await this.request(this.url, req.params, method as Method);
         if (res.error) {
             throw new Error(`[AceProject] ${res.content}`);
         }
@@ -91,11 +93,15 @@ export class AceProject extends HttpRequest
 
     public async login(): Promise<string>
     {
+        if (typeof(this.connection) === 'undefined') {
+            throw new Error('[AceProject] credentials not set');
+        }
+
         const res: IAceApiResponse = await this.apiCall('login', {
             params: {
-                accountId: this.connection.accountId,
-                username:  this.connection.username,
-                password:  this.connection.password,
+                accountId: this.connection!.accountId,
+                username:  this.connection!.username,
+                password:  this.connection!.password,
             },
         });
 
