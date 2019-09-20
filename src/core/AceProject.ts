@@ -54,6 +54,11 @@ export class AceProject extends HttpRequest
         this.guid = '';
     }
 
+    public setConnectionCredentials(c: IAceProjectCredentials): void
+    {
+        this.connection = c;
+    }
+
     public setGuid(g: string): void
     {
         this.guid = g;
